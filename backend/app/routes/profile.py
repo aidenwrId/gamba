@@ -116,6 +116,14 @@ def play_slots(
         details=render_session_details({"symbols": symbols, "message": message}),
     )
     db.add(session)
+    db.add(
+        Transaction(
+            user_id=user.id,
+            amount=net,
+            type="slots_result",
+            description=f"Spin outcome: {', '.join(symbols)} — {message}",
+        )
+    )
     db.commit()
     db.refresh(user)
     return SlotsResult(symbols=symbols, payout=payout, net=net, message=message)
@@ -146,6 +154,16 @@ def play_blackjack(
         ),
     )
     db.add(session)
+    db.add(
+        Transaction(
+            user_id=user.id,
+            amount=net,
+            type="blackjack_result",
+            description=(
+                f"Outcome: {outcome.title()} — player {', '.join(player)} vs dealer {', '.join(dealer)}"
+            ),
+        )
+    )
     db.commit()
     db.refresh(user)
     return BlackjackResult(player_hand=player, dealer_hand=dealer, outcome=outcome, net=net)
@@ -176,6 +194,16 @@ def play_virtual_sport(
         ),
     )
     db.add(session)
+    db.add(
+        Transaction(
+            user_id=user.id,
+            amount=net,
+            type="virtual_sport_result",
+            description=(
+                f"Backed {payload.selection.title()} — winner {winner.title()} at {odds}x"
+            ),
+        )
+    )
     db.commit()
     db.refresh(user)
     return VirtualSportResult(selection=payload.selection, winner=winner, net=net, odds=odds)

@@ -266,7 +266,9 @@ a:hover {
 
 .dashboard__stats {
   display: flex;
-  gap: 2rem;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
 .stat-label {
@@ -361,6 +363,12 @@ a:hover {
   border-radius: 0.9rem;
   border: 1px solid rgba(255, 255, 255, 0.05);
   font-size: 0.9rem;
+}
+
+.timeline .empty-state {
+  text-align: center;
+  font-style: italic;
+  color: var(--muted);
 }
 
 .promos {

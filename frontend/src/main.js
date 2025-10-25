@@ -1,6 +1,7 @@
 const tokenKey = "nebula_token";
 const ageKey = "nebula_age_verified";
-const baseUrl = "/api";
+const apiOverride = import.meta.env && import.meta.env.VITE_API_BASE_URL;
+const baseUrl = (apiOverride || "/api").replace(/\/$/, "");
 
 const ageGate = document.getElementById("age-gate");
 const ageConfirm = document.getElementById("age-confirm");
@@ -25,6 +26,7 @@ const blackjackOutput = document.getElementById("blackjack-output");
 const sportsOutput = document.getElementById("sports-output");
 const ctaRegister = document.getElementById("cta-register");
 const ctaLogin = document.getElementById("cta-login");
+const logoutButton = document.getElementById("logout-button");
 
 function showMessage(message, isError = false) {
   authMessage.textContent = message;
@@ -61,10 +63,13 @@ async function apiFetch(path, options = {}) {
   return data;
 }
 
-function logout() {
+function logout(showAlert = true) {
   localStorage.removeItem(tokenKey);
   dashboard.classList.add("hidden");
   toggleForms("login");
+  if (showAlert) {
+    showMessage("You have been logged out.");
+  }
 }
 
 async function loadDashboard() {
@@ -80,19 +85,32 @@ async function loadDashboard() {
     const tier = loyaltyTier(profile.loyalty_points);
     loyaltyProgress.textContent = `You are shining as a ${tier.label} explorer. ${tier.nextText}`;
 
-    sessionList.innerHTML = recent_sessions
-      .map((session) => {
-        const details = JSON.parse(session.details);
-        return `<li><strong>${formatTitle(session.game_type)}</strong> — bet ${session.bet_amount} • net ${formatNet(session.net_result)}<br/><small>${session.created_at}</small><br/><small>${summarizeDetails(details)}</small></li>`;
-      })
-      .join("");
+    sessionList.innerHTML = recent_sessions.length
+      ? recent_sessions
+          .map((session) => {
+            let details;
+            try {
+              details = JSON.parse(session.details);
+            } catch (error) {
+              details = {};
+            }
+            const bet = Number(session.bet_amount).toLocaleString();
+            const net = formatNet(session.net_result);
+            const when = formatDate(session.created_at);
+            const summary = summarizeDetails(details);
+            return `<li><strong>${formatTitle(session.game_type)}</strong> — bet ${bet} • net ${net}<br/><small>${when}</small><br/><small>${summary}</small></li>`;
+          })
+          .join("")
+      : '<li class="empty-state">No sessions logged yet. Try Prism Slots to begin!</li>';
 
-    transactionList.innerHTML = transactions
-      .map(
-        (txn) =>
-          `<li><strong>${formatTitle(txn.type)}</strong> — ${txn.amount.toLocaleString()} credits<br/><small>${txn.description}</small><br/><small>${txn.created_at}</small></li>`
-      )
-      .join("");
+    transactionList.innerHTML = transactions.length
+      ? transactions
+          .map(
+            (txn) =>
+              `<li><strong>${formatTitle(txn.type)}</strong> — ${formatNet(txn.amount)} credits<br/><small>${txn.description}</small><br/><small>${formatDate(txn.created_at)}</small></li>`
+          )
+          .join("")
+      : '<li class="empty-state">Play games or claim bonuses to populate your ledger.</li>';
   } catch (error) {
     showMessage(error.message, true);
   }
@@ -114,11 +132,23 @@ function loyaltyTier(points) {
   return { label: "Rookie", nextText: "Gather 501 points to unlock Stardust status." };
 }
 
-function formatNet(net) {
-  if (net > 0) {
-    return `+${net.toLocaleString()}`;
+function formatNet(value) {
+  const amount = Number(value);
+  if (Number.isNaN(amount)) {
+    return value;
   }
-  return net.toLocaleString();
+  if (amount > 0) {
+    return `+${amount.toLocaleString()}`;
+  }
+  return amount.toLocaleString();
+}
+
+function formatDate(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.valueOf())) {
+    return value;
+  }
+  return date.toLocaleString();
 }
 
 function formatTitle(text) {
@@ -134,12 +164,14 @@ function summarizeDetails(details) {
     return `Reels: ${details.symbols.join(" | ")} (${details.message})`;
   }
   if (details.outcome) {
-    return `Outcome: ${formatTitle(details.outcome)} — Player ${details.player?.join(", ")}`;
+    const dealer = details.dealer ? ` vs Dealer ${details.dealer.join(", ")}` : "";
+    const player = details.player ? details.player.join(", ") : "player";
+    return `Outcome: ${formatTitle(details.outcome)} — Player ${player}${dealer}`;
   }
   if (details.selection) {
     return `Picked ${formatTitle(details.selection)} • Winner ${formatTitle(details.winner)}`;
   }
-  return JSON.stringify(details);
+  return "Session details recorded.";
 }
 
 function setOutput(target, message, isError = false) {
@@ -276,6 +308,7 @@ sportsForm?.addEventListener("submit", async (event) => {
 
 ctaRegister?.addEventListener("click", () => toggleForms("register"));
 ctaLogin?.addEventListener("click", () => toggleForms("login"));
+logoutButton?.addEventListener("click", () => logout());
 
 ageConfirm?.addEventListener("click", () => {
   localStorage.setItem(ageKey, "true");
