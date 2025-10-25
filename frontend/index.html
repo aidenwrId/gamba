@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nebula Arcade - Social Casino Universe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Rubik:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/styles.css" />
+    <script defer src="/assets/app.js"></script>
+  </head>
+  <body>
+    <div id="age-gate" class="age-gate hidden">
+      <div class="age-gate__card">
+        <h2>Welcome to Nebula Arcade</h2>
+        <p>
+          This entertainment platform is designed for players aged 18 and over. No real-money
+          wagering is available or permitted.
+        </p>
+        <button id="age-confirm" class="button button--primary">I am 18 or older</button>
+      </div>
+    </div>
+    <div class="app-shell">
+      <header class="hero">
+        <nav class="nav">
+          <div class="nav__brand">Nebula Arcade</div>
+          <div class="nav__links">
+            <a href="#features">Features</a>
+            <a href="#games">Games</a>
+            <a href="#rewards">Rewards</a>
+            <a href="/about.html">About</a>
+            <a href="/faq.html">FAQ</a>
+            <a href="/terms.html">Terms</a>
+          </div>
+        </nav>
+        <section class="hero__content">
+          <div>
+            <h1>Explore a Constellation of Free-to-Play Thrills</h1>
+            <p>
+              Assemble your crew, claim luminous rewards, and experience original casino-inspired
+              games crafted for pure entertainment. Spin radiant reels, duel the dealer, and cheer on
+              virtual sports legends in one seamless hub.
+            </p>
+            <div class="cta-group">
+              <button id="cta-register" class="button button--primary">Create Account</button>
+              <button id="cta-login" class="button button--ghost">Sign In</button>
+            </div>
+          </div>
+          <div class="hero__card">
+            <h3>Daily Highlight</h3>
+            <p class="hero__stat">Free 500 credit recharge every 20 hours</p>
+            <p class="hero__stat">Loyalty track with cosmic-themed milestones</p>
+            <p class="hero__stat">Transparent RNG and published odds</p>
+          </div>
+        </section>
+      </header>
+
+      <main>
+        <section id="features" class="section">
+          <h2>Why Players Orbit Nebula Arcade</h2>
+          <div class="grid grid--features">
+            <article class="feature-card">
+              <h3>Original Games</h3>
+              <p>
+                Experience handcrafted titles with vibrant audio cues and polished visuals. Every
+                outcome uses cryptographic randomness so you always know the odds are fair.
+              </p>
+            </article>
+            <article class="feature-card">
+              <h3>Secure &amp; Private</h3>
+              <p>
+                Account data is encrypted in transit, passwords are hashed, and personal dashboards
+                only unlock with verified logins.
+              </p>
+            </article>
+            <article class="feature-card">
+              <h3>Earn &amp; Celebrate</h3>
+              <p>
+                Grow your loyalty constellation with every spin or hand. Unlock avatar frames, bonus
+                vaults, and spotlight badges as you progress.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section id="auth" class="section auth">
+          <div class="auth__panel">
+            <h2>Command Center</h2>
+            <form id="register-form" class="form hidden">
+              <h3>Create an Account</h3>
+              <label>
+                Username
+                <input type="text" name="username" required minlength="3" />
+              </label>
+              <label>
+                Email
+                <input type="email" name="email" required />
+              </label>
+              <label>
+                Password
+                <input type="password" name="password" required minlength="8" />
+              </label>
+              <label>
+                Age (18+)
+                <input type="number" name="age" min="18" required />
+              </label>
+              <button class="button button--primary" type="submit">Sign Up</button>
+            </form>
+            <form id="login-form" class="form hidden">
+              <h3>Sign In</h3>
+              <label>
+                Username
+                <input type="text" name="username" required />
+              </label>
+              <label>
+                Password
+                <input type="password" name="password" required />
+              </label>
+              <button class="button button--primary" type="submit">Login</button>
+            </form>
+            <div id="auth-message" class="auth__message" role="status"></div>
+          </div>
+          <div id="dashboard" class="dashboard hidden">
+            <div class="dashboard__header">
+              <div>
+                <h2>Player Dashboard</h2>
+                <p id="welcome-line">Welcome back, explorer.</p>
+              </div>
+              <div class="dashboard__stats">
+                <div>
+                  <span class="stat-label">Balance</span>
+                  <span id="stat-balance" class="stat-value">0</span>
+                </div>
+                <div>
+                  <span class="stat-label">Loyalty</span>
+                  <span id="stat-loyalty" class="stat-value">0</span>
+                </div>
+              </div>
+            </div>
+            <div class="dashboard__actions">
+              <button id="bonus-button" class="button button--primary">Claim Daily Bonus</button>
+              <select id="purchase-select">
+                <option value="">Select Credit Pack</option>
+                <option value="meteor">Meteor Spark (1,500)</option>
+                <option value="starlight">Starlight Surge (4,000)</option>
+                <option value="supercluster">Supercluster Cache (10,000)</option>
+              </select>
+              <button id="purchase-button" class="button button--ghost">Mock Purchase</button>
+            </div>
+
+            <section id="games" class="games">
+              <h3>Featured Games</h3>
+              <div class="grid grid--games">
+                <article class="game-card">
+                  <h4>Prism Slots</h4>
+                  <p>Line up cosmic icons on three shimmering reels using provably fair randomness.</p>
+                  <form id="slots-form" class="form-inline">
+                    <input type="number" min="1" name="bet" placeholder="Bet" required />
+                    <button class="button button--primary" type="submit">Spin</button>
+                  </form>
+                  <pre id="slots-output" class="game-output"></pre>
+                </article>
+                <article class="game-card">
+                  <h4>Solar Blackjack</h4>
+                  <p>Face an auto-dealer that follows classic rules with adaptive bust protection.</p>
+                  <form id="blackjack-form" class="form-inline">
+                    <input type="number" min="1" name="bet" placeholder="Bet" required />
+                    <button class="button button--primary" type="submit">Deal</button>
+                  </form>
+                  <pre id="blackjack-output" class="game-output"></pre>
+                </article>
+                <article class="game-card">
+                  <h4>Nova Derby</h4>
+                  <p>Back Aurora Rockets or Nebula Drifters in a fast-paced virtual matchup.</p>
+                  <form id="sports-form" class="form-inline">
+                    <input type="number" min="1" name="bet" placeholder="Bet" required />
+                    <select name="selection">
+                      <option value="aurora">Aurora Rockets 1.8x</option>
+                      <option value="nebula">Nebula Drifters 2.2x</option>
+                    </select>
+                    <button class="button button--primary" type="submit">Play</button>
+                  </form>
+                  <pre id="sports-output" class="game-output"></pre>
+                </article>
+              </div>
+            </section>
+
+            <section id="rewards" class="rewards">
+              <h3>Progress &amp; History</h3>
+              <div class="rewards__layout">
+                <div>
+                  <h4>Loyalty Track</h4>
+                  <p id="loyalty-progress">Earn points from every activity to reach the next tier.</p>
+                </div>
+                <div>
+                  <h4>Recent Sessions</h4>
+                  <ul id="session-list" class="timeline"></ul>
+                </div>
+                <div>
+                  <h4>Ledger</h4>
+                  <ul id="transaction-list" class="timeline"></ul>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="section promos">
+          <div class="promo">
+            <h3>Responsible Entertainment</h3>
+            <p>
+              Nebula Arcade is a play-money destination. Keep sessions balanced, set time limits, and
+              explore our wellbeing checklist whenever you need a break.
+            </p>
+          </div>
+          <div class="promo">
+            <h3>Daily Missions</h3>
+            <p>
+              Complete themed tasks like "Win 3 blackjack hands" or "Cheer on Aurora Rockets twice" to
+              collect flair tokens redeemable for avatar effects.
+            </p>
+          </div>
+          <div class="promo">
+            <h3>Community Spotlight</h3>
+            <p>
+              Join weekly polls in the Nebula Lounge to influence upcoming games, reel symbols, and
+              soundtrack vibes.
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p class="disclaimer">
+          Nebula Arcade offers social casino gameplay using virtual credits only. No deposits,
+          withdrawals, or real-money wagers are accepted. Must be 18+ to play.
+        </p>
+        <p class="footer__links">
+          <a href="/about.html">About</a>
+          <span>•</span>
+          <a href="/terms.html">Terms &amp; Policies</a>
+          <span>•</span>
+          <a href="/faq.html">Help Center</a>
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
