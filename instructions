@@ -1,0 +1,10 @@
+"Develop a fully functional, original online gaming platform inspired by the style and features of modern social casino websites, such as those in the online betting and gaming industry. The platform should include:
+
+Unique Design and UI/UX: Create a fresh, visually appealing layout with a modern, responsive design for desktop and mobile. Use a distinct color scheme, fonts, and animations that evoke a premium gaming experience without copying any existing site’s assets or branding.
+Core Functionality: Include features like user account creation, secure login, a variety of games (e.g., slots, table games, virtual sports), in-game currency systems (play money only, no real-money gambling), and promotional mechanics like daily bonuses or loyalty rewards.
+Game Mechanics: Build original game systems, such as slot machine logic, card game rules, or virtual betting with transparent, fair RNG (random number generation). Ensure all games are for entertainment purposes only, with clear disclaimers that no real money is involved.
+Backend Systems: Develop a robust backend to handle user data, game logic, and real-time interactions. Use secure, open-source frameworks (e.g., Node.js, Django) and include mock payment systems for in-game currency (no real fiat or crypto transactions).
+Content: Create original text, images, and multimedia assets for all games, pages (e.g., About, Terms, FAQ), and promotions. Avoid using any copyrighted material or branding from existing platforms.
+Performance: Optimize the platform for fast load times, scalability, and smooth user interactions, comparable to leading social casino platforms.
+Security: Implement SSL encryption, secure user authentication, and data protection measures to ensure user safety and trust.
+Compliance: Include visible disclaimers stating the platform is for entertainment only, with age verification prompts and responsible gaming notices. Ensure the platform is adaptable to comply with general gaming regulations (e.g., no real-money transactions).
